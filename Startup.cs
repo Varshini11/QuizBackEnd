@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 namespace quiz_backend
 {
@@ -34,12 +33,7 @@ namespace quiz_backend
                     .AllowAnyHeader();
             }));
             services.AddDbContext<QuizDbContext>(options => options.UseSqlServer("Server=(local)\\sqlexpress;Database=QuizDb;Trusted_connection=True;MultipleActiveResultSets=True"));
-            //services.AddDbContext<UserDbContext>(options => options.UseSqlServer("Server=(local)\\sqlexpress;Database=QuizDb;Trusted_connection=True;MultipleActiveResultSets=True"));
             services.AddControllers();
-            //services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<UserDbContext>();
-            //services.AddDefaultIdentity<IdentityUser>().addRoles<IdentityRole>().AddEntityFrameworkStores<UserDbContext>();
-            services.AddMvc();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,12 +44,7 @@ namespace quiz_backend
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(options =>
-                options.WithOrigins("http://localhost:4200")
-                .AllowAnyMethod()
-                .AllowAnyHeader());
-
-            app.UseHttpsRedirection();
+            app.UseCors("cors");
 
             app.UseRouting();
 

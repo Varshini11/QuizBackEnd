@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using quiz_backend.Models;
 namespace quiz_backend.Controllers
 {
     [Route("api/questions")]
@@ -12,7 +13,8 @@ namespace quiz_backend.Controllers
     public class QuestionsController : ControllerBase
     {
         readonly QuizDbContext context;
-        public QuestionsController(QuizDbContext context) { 
+        public QuestionsController(QuizDbContext context)
+        { 
             this.context = context;
         }
         [HttpGet]
@@ -28,7 +30,7 @@ namespace quiz_backend.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Models.Question question)
         {
-            var quiz = context.Quiz.SingleOrDefault(q => q.ID == question.QuizId);
+            var quiz = context.Quizzes.SingleOrDefault(q => q.ID == question.QuizId);
 
             if (quiz == null)
                 return NotFound();

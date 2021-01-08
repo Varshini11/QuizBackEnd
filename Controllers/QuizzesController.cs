@@ -15,7 +15,6 @@ namespace quiz_backend.Controllers
     public class QuizzesController : ControllerBase
     {
         private readonly QuizDbContext _context;
-
         public QuizzesController(QuizDbContext context)
         {
             _context = context;
@@ -23,16 +22,16 @@ namespace quiz_backend.Controllers
 
         // GET: api/Quizzes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Quiz>>> GetQuiz()
+        public async Task<ActionResult<IEnumerable<Quiz>>> GetQuizzes()
         {
-            return await _context.Quiz.ToListAsync();
+            return await _context.Quizzes.ToListAsync();
         }
 
         // GET: api/Quizzes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Quiz>> GetQuiz(int id)
         {
-            var quiz = await _context.Quiz.FindAsync(id);
+            var quiz = await _context.Quizzes.FindAsync(id);
 
             if (quiz == null)
             {
@@ -78,7 +77,7 @@ namespace quiz_backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Quiz>> PostQuiz(Quiz quiz)
         {
-            _context.Quiz.Add(quiz);
+            _context.Quizzes.Add(quiz);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetQuiz", new { id = quiz.ID }, quiz);
@@ -88,13 +87,13 @@ namespace quiz_backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteQuiz(int id)
         {
-            var quiz = await _context.Quiz.FindAsync(id);
+            var quiz = await _context.Quizzes.FindAsync(id);
             if (quiz == null)
             {
                 return NotFound();
             }
 
-            _context.Quiz.Remove(quiz);
+            _context.Quizzes.Remove(quiz);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +101,7 @@ namespace quiz_backend.Controllers
 
         private bool QuizExists(int id)
         {
-            return _context.Quiz.Any(e => e.ID == id);
+            return _context.Quizzes.Any(e => e.ID == id);
         }
     }
 }
